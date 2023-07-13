@@ -1,18 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import User from './user.schema';
+import createUserDto from './dtos/create.dto';
 
 @Injectable()
 export class UserService {
-  //
-  create(user: any) {
-    return user;
+  async create(user: createUserDto) {
+    try {
+      return await User.create({ ...user });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  //
-  findOne(id: string) {
-    return { name: 'John Doe', age: 25, id: id };
+  async findOne(id: string) {
+    return await User.findOne({ _id: id });
   }
 
-  delete(id: string) {
-    return `user with use ${id} is delete`;
+  async findAll() {
+    return await User.find();
+  }
+
+  async update(id: string, user: any) {
+    return await User.updateOne({ _id: id }, user);
+  }
+
+  async delete(id: string) {
+    return await User.deleteOne({ _id: id });
   }
 }
