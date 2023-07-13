@@ -1,12 +1,25 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import UserInterface from './user.interface';
+import { HydratedDocument } from 'mongoose';
 
-const userSchema = new mongoose.Schema<UserInterface>({
-  lastName: String,
-  firstName: String,
-  photoUrl: String,
-  age: Number,
-});
+export type UserDocument = HydratedDocument<User>;
 
-const User = mongoose.model<UserInterface>('User', userSchema);
-export default User;
+@Schema()
+export class User {
+  @Prop({ type: mongoose.Schema.Types.ObjectId })
+  userId: string;
+
+  @Prop({ required: true })
+  lastName: string;
+
+  @Prop({ required: true })
+  firstName: string;
+
+  @Prop({ required: true })
+  age: number;
+
+  @Prop()
+  photoUrl: string;
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);
