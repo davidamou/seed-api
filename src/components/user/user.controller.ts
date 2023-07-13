@@ -20,8 +20,7 @@ export class UserController {
   @Post()
   async addUser(@Body() body: any, @Res() res: Response) {
     try {
-      const r = await this.userService.create(body);
-      r.save();
+      await this.userService.create(body);
       return res.status(HttpStatus.CREATED).json({ message: 'User created' });
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
@@ -30,9 +29,10 @@ export class UserController {
 
   // Cette fonction permet de récupérer un utilisateur par son id
   @Get(':id')
-  getUser(@Param('id') id: string, @Res() res: Response) {
+  async getUser(@Param('id') id: string, @Res() res: Response) {
     try {
-      return this.userService.findOne(id);
+      const data = await this.userService.findOne(id);
+      return res.status(HttpStatus.OK).json(data);
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }
@@ -40,19 +40,39 @@ export class UserController {
 
   // Récupérer tous les utilisateurs
   @Get()
-  getAllUsers() {
-    return this.userService.findAll();
+  async getAllUsers(@Res() res: Response) {
+    try {
+      const data = await this.userService.findAll();
+      return res.status(HttpStatus.OK).json(data);
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
+    }
   }
 
   // modification d'un utilisateur par son id
   @Put(':id')
-  updateUser(@Param('id') id: string, @Body() newData: any) {
-    return `user ${id} is modify: ${newData}`;
+  async updateUser(
+    @Param('id') id: string,
+    @Body() newData: any,
+    @Res() res: Response,
+  ) {
+    try {
+      await this.userService.update(id, newData);
+      return res.status(HttpStatus.OK).json({ message: 'User updated' });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
+    }
+    return await this.userService.update(id, newData);
   }
 
   // suppression d'un utilisateur par son id
   @Delete(':id')
-  deleteUser(@Param('id') id: string) {
-    return this.userService.delete(id);
+  async deleteUser(@Param('id') id: string, @Res() res: Response) {
+    try {
+      await this.userService.delete(id);
+      return res.status(204).json({ message: 'User deleted' });
+    } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
+    }
   }
 }
