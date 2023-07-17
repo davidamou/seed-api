@@ -29,7 +29,7 @@ export class UserController {
 
   // Cette fonction permet de récupérer un utilisateur par son id
   @Get(':id')
-  async getUser(@Param('id') id: string, @Res() res: Response) {
+  async getUser(@Param('id') id: number, @Res() res: Response) {
     try {
       const data = await this.userService.findOne(id);
       return res.status(HttpStatus.OK).json(data);
@@ -52,7 +52,7 @@ export class UserController {
   // modification d'un utilisateur par son id
   @Put(':id')
   async updateUser(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() newData: any,
     @Res() res: Response,
   ) {
@@ -67,7 +67,7 @@ export class UserController {
 
   // suppression d'un utilisateur par son id
   @Delete(':id')
-  async deleteUser(@Param('id') id: string, @Res() res: Response) {
+  async deleteUser(@Param('id') id: number, @Res() res: Response) {
     try {
       await this.userService.delete(id);
       return res.status(204).json({ message: 'User deleted' });
