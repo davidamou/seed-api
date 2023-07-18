@@ -10,12 +10,9 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
   async create(user: createUserDto) {
-    try {
-      return await this.create(user);
-    } catch (error) {
-      throw error;
-    }
+    return await this.usersRepository.save(user);
   }
 
   async findOne(id: number) {

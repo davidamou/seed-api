@@ -21,7 +21,7 @@ export class UserController {
   async addUser(@Body() body: any, @Res() res: Response) {
     try {
       await this.userService.create(body);
-      return res.status(HttpStatus.CREATED).json({ message: 'User created' });
+      res.status(HttpStatus.CREATED).json({ message: 'User created' });
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }
@@ -32,7 +32,7 @@ export class UserController {
   async getUser(@Param('id') id: number, @Res() res: Response) {
     try {
       const data = await this.userService.findOne(id);
-      return res.status(HttpStatus.OK).json(data);
+      res.status(HttpStatus.OK).json(data);
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }
@@ -58,7 +58,7 @@ export class UserController {
   ) {
     try {
       await this.userService.update(id, newData);
-      return res.status(HttpStatus.OK).json({ message: 'User updated' });
+      res.status(HttpStatus.OK).json({ message: 'User updated' });
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }
@@ -69,7 +69,7 @@ export class UserController {
   async deleteUser(@Param('id') id: number, @Res() res: Response) {
     try {
       await this.userService.delete(id);
-      return res.status(204).json({ message: 'User deleted' });
+      res.status(204).json({ message: 'User deleted' });
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }

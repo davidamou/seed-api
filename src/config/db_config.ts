@@ -10,5 +10,5 @@ export const ormModule = TypeOrmModule.forRoot({
   password: config.dbPass,
   database: config.dbName,
   entities: [User],
-  synchronize: true,
+  synchronize: false,
 });
