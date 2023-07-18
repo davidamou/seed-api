@@ -62,7 +62,6 @@ export class UserController {
     } catch (error) {
       res.status(HttpStatus.BAD_REQUEST).json({ message: error.message });
     }
-    return await this.userService.update(id, newData);
   }
 
   // suppression d'un utilisateur par son id
