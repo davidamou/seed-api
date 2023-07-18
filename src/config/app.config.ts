@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-export const config = {
+export const appConfig = {
   port: process.env.PORT || 3000,
   apiKey: process.env.API_KEY,
   mongoUrl: process.env.DB_URL,

@@ -1,14 +1,14 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from './config';
 import { User } from '../components/user/user.entity';
+import { appConfig } from './app.config';
 
 export const ormModule = TypeOrmModule.forRoot({
   type: 'postgres',
-  host: config.dbHost,
-  port: config.dbPort,
-  username: config.dbUser,
-  password: config.dbPass,
-  database: config.dbName,
+  host: appConfig.dbHost,
+  port: appConfig.dbPort,
+  username: appConfig.dbUser,
+  password: appConfig.dbPass,
+  database: appConfig.dbName,
   entities: [User],
   synchronize: false,
 });
